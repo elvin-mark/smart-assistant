@@ -1,0 +1,7 @@
+torch==1.11.0
+transformers @ git+https://github.com/huggingface/transformers@b90fbc7e0ba41dfd6b343e7e2274443f19087f36
+datasets==2.10.1
+sentencepiece==0.1.96
+numpy==1.22.3
+scipy==1.8.0
+Flask==2.0.3
