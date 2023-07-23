@@ -3,8 +3,9 @@ import numpy as np
 
 class SpeechRecognition:
     def __init__(self):
-        self.processor = WhisperProcessor.from_pretrained("openai/whisper-tiny.en")
-        self.model = WhisperForConditionalGeneration.from_pretrained("openai/whisper-tiny.en")
+        self.model_name = "openai/whisper-tiny.en"
+        self.processor = WhisperProcessor.from_pretrained(self.model_name)
+        self.model = WhisperForConditionalGeneration.from_pretrained(self.model_name)
     
     def transcript(self,  raw_data_buffer: np.ndarray, sampling_rate: int = 16000):
         raw_data = raw_data_buffer / pow(2, 15)
