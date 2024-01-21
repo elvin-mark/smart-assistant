@@ -2,9 +2,8 @@ import React, { useState, useRef } from 'react';
 import MicIcon from '@mui/icons-material/Mic';
 
 
-const AudioRecorder: React.FC = () => {
+function AudioRecorder({ handleSendAudio }: { handleSendAudio: (blob: Blob) => void }) {
     const [isRecording, setIsRecording] = useState(false);
-    const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const [isButtonPressed, setIsButtonPressed] = useState(false);
 
@@ -15,10 +14,10 @@ const AudioRecorder: React.FC = () => {
 
         navigator.mediaDevices.getUserMedia({ audio: true })
             .then((stream) => {
-                const mediaRecorder = new MediaRecorder(stream);
+                const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
                 mediaRecorder.ondataavailable = (event) => {
                     if (event.data.size > 0) {
-                        setAudioBlob(event.data);
+                        handleSendAudio(event.data);
                     }
                 };
 
@@ -55,7 +54,7 @@ const AudioRecorder: React.FC = () => {
     };
 
     return (
-        <div className=' grid grid-cols-1 items-center gap-5'>
+        <div className=''>
             <div className='flex justify-center'>
                 <button
                     className={`text-white px-4 py-2 ${buttonColor} select-none`}
@@ -66,16 +65,6 @@ const AudioRecorder: React.FC = () => {
                 >
                     <MicIcon></MicIcon>
                 </button>
-            </div>
-
-            <div className='flex justfiy-center'>
-
-                {audioBlob && (
-                    <audio controls>
-                        <source src={URL.createObjectURL(audioBlob)} type="audio/wav" />
-                        Your browser does not support the audio element.
-                    </audio>
-                )}
             </div>
         </div>
     );
