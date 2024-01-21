@@ -1,6 +1,5 @@
-datasets==2.8.0
 Flask==2.2.2
 numpy==1.23.5
 scipy==1.11.1
-torch==1.13.0
-transformers==4.32.0.dev0
+torch==2.1.2+cu118
+transformers==4.36.2
