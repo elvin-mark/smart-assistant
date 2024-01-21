@@ -5,8 +5,10 @@ import io
 from scipy.io.wavfile import write as wav_write
 import torch
 import uuid
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 smart_assistant = SmartAssistant()
 speech_map = {}
 
