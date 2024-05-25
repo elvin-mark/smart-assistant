@@ -1,0 +1,10 @@
+version: '1.0'
+services:
+  speech-recognition:
+    image: smart-assistant/speech-recognition:1.0
+    ports:
+      - 8080:8080
+  chatbot:
+    image: smart-assistant/chatbot:1.0
+    ports:
+      - 8181:8181

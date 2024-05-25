@@ -2,8 +2,8 @@ import streamlit as st
 import requests
 
 def get_response(prompt:str) -> str:
-    res = requests.get("http://localhost:5000/chatbot/response",params={"query":prompt})
-    return res.json()["result"]
+    res = requests.post("http://localhost:8181/completion",json={"prompt":prompt,"n_predict": 128})
+    return res.json()["content"]
 
 st.title("Chat with the Smart Assistant!")
 
