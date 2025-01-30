@@ -1,0 +1,1 @@
+/app/bin/whisper-server -m /models/$MODEL_NAME --host 0.0.0.0 --port 8080 --convert

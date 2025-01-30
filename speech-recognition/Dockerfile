@@ -1,19 +1,16 @@
 FROM alpine
 
-RUN apk update && apk add git build-base make ffmpeg wget
-
-RUN mkdir -p /app
-RUN mkdir -p /app/models
-
 WORKDIR /app
 
-RUN git clone https://github.com/ggerganov/whisper.cpp.git && \
-    cd whisper.cpp && \
-    make 
+COPY ./utils/whisper.cpp/build/src/libwhisper.* /app/lib/
+COPY ./utils/whisper.cpp/build/ggml/src/*.so /app/lib/
+COPY ./utils/whisper.cpp/build/bin/whisper-server /app/bin/
+COPY ./speech-recognition/entrypoint.sh /app/
 
-# COPY ./ggml-base.bin /app/models/
-RUN wget -O /app/models/ggml-base.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.bin?download=true
+RUN apk add libstdc++ libgomp ffmpeg
 
 EXPOSE 8080
 
-ENTRYPOINT [ "/app/whisper.cpp/server","-m","/app/models/ggml-base.bin" ,"--host","0.0.0.0","--port","8080","--convert"]
+ENV LD_LIBRARY_PATH=/app/lib/
+
+ENTRYPOINT [ "sh","/app/entrypoint.sh"]
