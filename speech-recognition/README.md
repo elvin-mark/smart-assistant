@@ -6,5 +6,9 @@ Note: Make sure to download the gguf model from [here](https://huggingface.co/gg
 
 # Build Docker Image
 ```sh
-docker build -t smart-assistant/speech-recognition:1.0 .
+	docker build -t smart-assistant/speech-recognition -f speech-recognition/Dockerfile .
+```
+
+```sh
+make docker-speech-recognition
 ```

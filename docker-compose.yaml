@@ -1,10 +1,19 @@
 version: '1.0'
 services:
   speech-recognition:
-    image: smart-assistant/speech-recognition:1.0
+    image: smart-assistant/speech-recognition
     ports:
       - 8080:8080
+    volumes:
+      - ${SPEECH_RECOGNITION_MODEL}:/models/${WHISPER_MODEL_NAME}
+    environment:
+      - MODEL_NAME=${WHISPER_MODEL_NAME}
+      
   chatbot:
-    image: smart-assistant/chatbot:1.0
+    image: smart-assistant/chatbot
     ports:
       - 8181:8181
+    volumes:
+      - ${CHATBOT_MODEL}:/models/${CHATBOT_MODEL_NAME}
+    environment:
+      - MODEL_NAME=${CHATBOT_MODEL_NAME}
