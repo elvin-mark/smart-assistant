@@ -29,3 +29,6 @@ docker-text-to-speech:
 
 run-text-to-speech:
 	docker run -it -v ${TTS_MODEL}:/models/${TTS_MODEL_NAME} -v ${WAVTOKENIZER_MODEL}:/models/${WAVTOKENIZER_MODEL_NAME} -e TTS_MODEL_NAME=${TTS_MODEL_NAME} -e WAVTOKENIZER_MODEL_NAME=${WAVTOKENIZER_MODEL_NAME} -p 8020:8020 -p 8021:8021 --name text-to-speech smart-assistant/text-to-speech
+
+run-server:
+	python3 -m streamlit run server.py
