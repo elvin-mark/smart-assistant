@@ -6,8 +6,11 @@ from langchain_core.language_models.llms import LLM
 from langchain_core.embeddings import Embeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
+from langchain_community.docstore.in_memory import InMemoryDocstore
+import faiss
 from langchain.chains import RetrievalQA
 import streamlit as st
+from io import StringIO
 
 class CustomEmbeddings(Embeddings):
 
@@ -44,21 +47,22 @@ class CustomLLM(LLM):
 
     @property
     def _identifying_params(self) -> Mapping[str, Any]:
-        """Return custom parameters (if needed)."""
         return {"endpoint": self.endpoint}
 
     @property
     def _llm_type(self) -> str:
-        """Get the type of language model used by this chat model. Used for logging purposes only."""
         return "custom"
 
-with open("/home/elvin/Downloads/quantum.txt", "r") as f:
-    data = f.read()
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150,length_function=len,is_separator_regex=False)
-docs = text_splitter.create_documents([data])
-
 embeddings = CustomEmbeddings()
-db = FAISS.from_documents(docs, embeddings)
+
+index = faiss.IndexFlatL2(384)
+db = FAISS(
+    embedding_function=embeddings,
+    index=index,
+    docstore=InMemoryDocstore(),
+    index_to_docstore_id={},
+)
+
 llm = CustomLLM()
 
 qa = RetrievalQA.from_chain_type(
@@ -67,8 +71,19 @@ qa = RetrievalQA.from_chain_type(
     retriever=db.as_retriever()
 )
 
+def upload_file(data: str):
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150,length_function=len,is_separator_regex=False)
+    docs = text_splitter.create_documents([data])
+    db.add_documents(docs)
+
 def get_response(prompt:str) -> str:
     return qa.invoke(prompt)["result"]
+
+
+uploaded_file = st.file_uploader("Choose a file")
+if uploaded_file is not None:
+    stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
+    upload_file(stringio.read())
 
 st.title("Chat with the Smart Assistant!")
 
@@ -87,3 +102,7 @@ if prompt := st.chat_input("What would you like to know?"):
     with st.chat_message("assistant"):
         st.markdown(response)
     st.session_state.messages.append({"role": "assistant", "content": response})
+
+audio_value = st.audio_input("Record a voice message")
+if audio_value:
+    st.audio(audio_value)
