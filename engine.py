@@ -1,3 +1,4 @@
+import os
 import requests
 import numpy as np
 from typing import Any, List, Mapping, Optional
@@ -76,3 +77,14 @@ def upload_file(data: str):
 
 def get_response(prompt:str) -> str:
     return qa.invoke(prompt)["result"]
+
+
+def process_audio(data: Any):
+    res = requests.post("http://localhost:8080/inference",files={
+        "file": ("audio.wav",data.read())
+    })
+    return res.json().get("text","")
+    
+def generate_speech(text: str):
+    command = f'espeak-ng -w tmp/spoken.wav "{text}"'
+    os.system(command)
