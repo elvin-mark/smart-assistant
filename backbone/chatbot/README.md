@@ -7,7 +7,7 @@ Note: Make sure to download the gguf model from [here](https://huggingface.co/un
 # Build Docker Image
 
 ```sh
-docker build -t smart-assistant/chatbot -f chatbot/Dockerfile .
+docker build -t smart-assistant/chatbot -f backbone/chatbot/Dockerfile .
 ```
 
 or

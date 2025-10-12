@@ -5,8 +5,9 @@ For the chatbot, the [OpenAI's Whisper](https://github.com/openai/whisper) model
 Note: Make sure to download the gguf model from [here](https://huggingface.co/ggerganov/whisper.cpp/tree/main).
 
 # Build Docker Image
+
 ```sh
-	docker build -t smart-assistant/speech-recognition -f speech-recognition/Dockerfile .
+docker build -t smart-assistant/speech-recognition -f backbone/speech-recognition/Dockerfile .
 ```
 
 ```sh
