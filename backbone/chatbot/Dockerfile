@@ -5,7 +5,7 @@ WORKDIR /app
 COPY ./backbone/utils/llama.cpp/build/bin/*.so /app/lib/
 COPY ./backbone/utils/llama.cpp/build/bin/llama-server /app/bin/
 COPY ./backbone/chatbot/entrypoint.sh /app/
-RUN apk add libstdc++ libgomp
+RUN apk add libstdc++ libgomp curl-dev
 
 EXPOSE 8181
 

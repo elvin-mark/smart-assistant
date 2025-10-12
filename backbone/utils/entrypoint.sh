@@ -1,19 +1,31 @@
 cd /app
 
-apk update && apk add git build-base make wget cmake ffmpeg linux-headers
+apk update && apk add git build-base make wget cmake ffmpeg linux-headers curl-dev
 
-git clone https://github.com/ggerganov/llama.cpp.git && \
-    cd llama.cpp && \
-    mkdir build && \
+if [ -d llama.cpp ]; then
+    cd llama.cpp
+    git pull
+else
+    git clone https://github.com/ggerganov/llama.cpp.git
+    cd llama.cpp
+fi
+
+mkdir -p build && \
     cd build &&\
     cmake .. && \
-    make -j 4
+    make -j4
 
 cd /app
 
-git clone https://github.com/ggerganov/whisper.cpp.git && \
-    cd whisper.cpp && \
-    mkdir build && \
+if [ -d whisper.cpp ]; then
+    cd whisper.cpp
+    git pull
+else
+    git clone https://github.com/ggerganov/whisper.cpp.git
+    cd whisper.cpp
+fi
+
+mkdir -p build && \
     cd build &&\
     cmake .. && \
-    make -j 4
+    make -j4
