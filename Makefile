@@ -4,7 +4,7 @@ EMBEDDINGS_MODEL_NAME=all-MiniLM-L6-v2-Q8_0.gguf
 KOKORO_TTS_MODEL_NAME=model_fp16.onnx
 
 binaries:
-	docker run -it -v ./utils:/app --name builder --entrypoint sh alpine /app/entrypoint.sh
+	docker run -it -v ./backbone/utils:/app --name builder --entrypoint sh alpine /app/entrypoint.sh
 	docker rm builder
 
 docker-chatbot:
