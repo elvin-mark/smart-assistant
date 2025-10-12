@@ -1,6 +1,6 @@
 cd /app
 
-apk update && apk add git build-base make wget cmake ffmpeg
+apk update && apk add git build-base make wget cmake ffmpeg linux-headers
 
 git clone https://github.com/ggerganov/llama.cpp.git && \
     cd llama.cpp && \
