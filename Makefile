@@ -1,6 +1,7 @@
-CHATBOT_MODEL_NAME=tinyswallow-1.5b-instruct-q5_k_m.gguf
-WHISPER_MODEL_NAME=whisper.bin
+CHATBOT_MODEL_NAME=gemma-3-270m-it-Q8_0.gguf
+WHISPER_MODEL_NAME=ggml-base.bin
 EMBEDDINGS_MODEL_NAME=all-MiniLM-L6-v2-Q8_0.gguf
+KOKORO_TTS_MODEL_NAME=model_fp16.onnx
 
 binaries:
 	docker run -it -v ./utils:/app --name builder --entrypoint sh alpine /app/entrypoint.sh
@@ -28,7 +29,7 @@ docker-text-to-speech:
 	docker build -t smart-assistant/text-to-speech -f text-to-speech/Dockerfile .
 
 run-text-to-speech:
-	docker run -it -v ${TTS_MODEL}:/models/${TTS_MODEL_NAME} -v ${WAVTOKENIZER_MODEL}:/models/${WAVTOKENIZER_MODEL_NAME} -e TTS_MODEL_NAME=${TTS_MODEL_NAME} -e WAVTOKENIZER_MODEL_NAME=${WAVTOKENIZER_MODEL_NAME} -p 8020:8020 -p 8021:8021 --name text-to-speech smart-assistant/text-to-speech
+	docker run -it -v ${KOKORO_TTS_MODEL}:/app/assets/${KOKORO_TTS_MODEL_NAME} -e MODEL_NAME=${KOKORO_TTS_MODEL_NAME} -p 8383:8383 --name text-to-speech smart-assistant/text-to-speech
 
 run-server:
 	python3 -m streamlit run server.py
