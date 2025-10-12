@@ -30,11 +30,8 @@ services:
   text-to-speech:
     image: smart-assistant/text-to-speech
     ports:
-      - 8020:8020
-      - 8021:8021
+      - 8383:8383
     volumes:
-      - ${TTS_MODEL}:/models/${TTS_MODEL_NAME}
-      - ${WAVTOKENIZER_MODEL}:/models/${WAVTOKENIZER_MODEL_NAME}
+      - ${KOKORO_TTS_MODEL}:/app/assets/${KOKORO_TTS_MODEL_NAME}
     environment:
-      - TTS_MODEL_NAME=${TTS_MODEL_NAME}
-      - WAVTOKENIZER_MODEL_NAME=${WAVTOKENIZER_MODEL_NAME}
+      - MODEL_NAME=${KOKORO_TTS_MODEL_NAME}

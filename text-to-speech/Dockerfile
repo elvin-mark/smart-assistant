@@ -1,16 +1,11 @@
-FROM alpine
+FROM python:3.12-slim
 
 WORKDIR /app
 
-COPY ./utils/llama.cpp/build/bin/*.so /app/lib/
-COPY ./utils/llama.cpp/build/bin/llama-server /app/bin/
-COPY ./text-to-speech/entrypoint.sh /app/
+COPY ./text-to-speech/ /app/
 
-RUN apk add libstdc++ libgomp
+RUN pip3 install -r requirements.txt
 
-EXPOSE 8020
-EXPOSE 8021
+EXPOSE 8383
 
-ENV LD_LIBRARY_PATH=/app/lib/
-
-ENTRYPOINT [ "sh","/app/entrypoint.sh"]
+ENTRYPOINT [ "uvicorn","server:app","--host","0.0.0.0","--port","8383"]

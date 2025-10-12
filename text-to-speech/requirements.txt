@@ -1,0 +1,9 @@
+numpy
+fastapi
+uvicorn
+onnxruntime
+spacy
+num2words
+misaki
+scipy
+python-multipart

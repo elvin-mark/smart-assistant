@@ -1,14 +1,15 @@
 # Text-to-Speech
 
-For the chatbot, the [OpenAI's Whisper](https://github.com/openai/whisper) model is being used, since this model it is light weigth and already good enough for this project. On top of that, to make a simple and fast inference server (without any extra dependencies), the [whisper.cpp](https://github.com/ggerganov/whisper.cpp) server and the [gguf model of Whisper](https://huggingface.co/ggerganov/whisper.cpp/tree/main) is used.
+For the chatbot, the [KokoroTTS](https://github.com/hexgrad/kokoro) model is being used, since this model it is light weigth and already good enough for this project. On top of that, to make a simple and fast inference server, the [onnxruntime inference engine](https://github.com/microsoft/onnxruntime) server and the [onnx model of KokoroTTS](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/tree/main/onnx) is used.
 
-Note: Make sure to download the gguf model from [here](https://huggingface.co/ggerganov/whisper.cpp/tree/main).
+Note: Make sure to download the onnx model from [here](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/tree/main/onnx).
 
 # Build Docker Image
+
 ```sh
-	docker build -t smart-assistant/speech-recognition -f speech-recognition/Dockerfile .
+	docker build -t smart-assistant/text-to-speech -f text-to-speech/Dockerfile .
 ```
 
 ```sh
-make docker-speech-recognition
+make docker-text-to-speech
 ```
