@@ -7,7 +7,7 @@ Note: Make sure to download the onnx model from [here](https://huggingface.co/on
 # Build Docker Image
 
 ```sh
-	docker build -t smart-assistant/text-to-speech -f text-to-speech/Dockerfile .
+docker build -t smart-assistant/text-to-speech -f text-to-speech/Dockerfile .
 ```
 
 ```sh
