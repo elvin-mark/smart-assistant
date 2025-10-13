@@ -42,7 +42,7 @@ else
 fi
 
 apk add espeak-ng-dev sdl2-dev
-ln -s /usr/lib/libespeak-ng.so /usr/lib/libespeak-ng.o
+# ln -s /usr/lib/libespeak-ng.so /usr/lib/libespeak-ng.o # <- no need since TTS.cpp has been updated
 export ESPEAK_INSTALL_DIR=/usr
 cmake -B build
 cmake --build build --config Release 
