@@ -1,8 +1,9 @@
 import streamlit as st
 from io import StringIO
-from engine.ai.rag import upload_file, get_response
+from engine.ai.rag import upload_file
 from engine.ai.asr import speech_recognition
 from engine.ai.tts import text_to_speech
+from engine.agent import agent
 
 
 uploaded_file = st.file_uploader("Choose a file")
@@ -25,7 +26,7 @@ if prompt := st.chat_input("What would you like to know?"):
     st.chat_message("user").markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
 
-    response = get_response(prompt)
+    response = agent.run(prompt)
     with st.chat_message("assistant"):
         st.markdown(response)
     st.session_state.messages.append({"role": "assistant", "content": response})
@@ -36,7 +37,7 @@ if audio_value is not None:
     st.chat_message("user").markdown(transcription)
     st.session_state.messages.append({"role": "user", "content": transcription})
 
-    response = get_response(transcription)
+    response = agent.run(transcription)
     with st.chat_message("assistant"):
         st.markdown(response)
     st.session_state.messages.append({"role": "assistant", "content": response})

@@ -14,7 +14,7 @@ db = FAISS(
     index_to_docstore_id={},
 )
 
-qa = RetrievalQA.from_chain_type(
+document_qa = RetrievalQA.from_chain_type(
     llm=llm, chain_type="stuff", retriever=db.as_retriever()
 )
 
@@ -28,7 +28,3 @@ def upload_file(data: str):
     )
     docs = text_splitter.create_documents([data])
     db.add_documents(docs)
-
-
-def get_response(prompt: str) -> str:
-    return qa.invoke(prompt)["result"]
