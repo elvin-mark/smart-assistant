@@ -1,11 +1,12 @@
-FROM python:3.12-slim
+FROM alpine
 
 WORKDIR /app
 
-COPY ./backbone/text-to-speech/ /app/
+COPY ./backbone/utils/TTS.cpp/build/bin/tts-server /app/bin/
+COPY ./backbone/text-to-speech/entrypoint.sh /app/
 
-RUN pip3 install -r requirements.txt
+RUN apk add libstdc++ libgomp espeak-ng-dev
 
 EXPOSE 8383
 
-ENTRYPOINT [ "uvicorn","server:app","--host","0.0.0.0","--port","8383"]
+ENTRYPOINT [ "sh","/app/entrypoint.sh"]

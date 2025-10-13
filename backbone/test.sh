@@ -12,9 +12,17 @@ curl localhost:${EMBEDDINGS_PORT}/embeddings \
     -d '{"content": "Hello"}' | jq .
 
 mkdir -p tmp
-curl localhost:${TTS_PORT}/tts \
-    -F "text=Hello" \
-    -o tmp/spoken.wav
+
+curl http://localhost:${TTS_PORT}/v1/audio/speech  \
+  -H "Content-Type: application/json" \
+  -d '{
+    "input": "This will be converted to speech.",
+    "temperature": 0.8,
+    "top_k": 20,
+    "repetition_penalty": 1.1,
+    "response_format": "wav"
+  }' \
+  --output ./tmp/spoken.wav
 
 curl localhost:${ASR_PORT}/inference \
     -F "file=@backbone/utils/whisper.cpp/samples/jfk.mp3" | jq .
