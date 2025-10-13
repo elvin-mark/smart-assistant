@@ -1,9 +1,6 @@
 from langchain.agents import initialize_agent, AgentType
-from engine.tools.calculator import calculator
-from engine.tools.document_qa import get_response_from_documents
+from engine.tools import tools
 from engine.ai.llm import llm
-
-tools = [calculator, get_response_from_documents]
 
 agent = initialize_agent(
     tools=tools,
