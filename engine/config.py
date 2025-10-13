@@ -1,4 +1,6 @@
-LLM_TYPE = "local"
+import os
+
+LLM_TYPE = os.getenv("LLM_TYPE", "local")
 LLM_ENDPOINT = "http://localhost:8181/v1"
 LLM_API_KEY = "no-key"
 EMBEDDINGS_ENDPOINT = "http://localhost:8282/embedding"
