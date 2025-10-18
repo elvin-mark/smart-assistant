@@ -6,3 +6,5 @@ LLM_API_KEY = "no-key"
 EMBEDDINGS_ENDPOINT = "http://localhost:8282/embedding"
 ASR_ENDPOINT = "http://localhost:8080/inference"
 TTS_ENDPOINT = "http://localhost:8383/v1/audio/speech"
+
+ASSISTANT_SERVER = "http://localhost:5100"

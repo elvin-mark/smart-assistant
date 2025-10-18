@@ -1,0 +1,1 @@
+from mymusic.controller import add_music_controllers
