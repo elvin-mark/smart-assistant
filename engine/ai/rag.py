@@ -4,7 +4,10 @@ import faiss
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from engine.ai.embeddings import embeddings
 from engine.ai.llm import llm
-from langchain.chains import RetrievalQA
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+
 
 index = faiss.IndexFlatL2(384)
 db = FAISS(
@@ -14,8 +17,19 @@ db = FAISS(
     index_to_docstore_id={},
 )
 
-document_qa = RetrievalQA.from_chain_type(
-    llm=llm, chain_type="stuff", retriever=db.as_retriever()
+template = """
+Use the following pieces of retrieved context to answer the question. 
+If you don't know the answer, just say that you don't know, don't try to make up an answer.
+Context: {context}
+Question: {question}
+"""
+prompt = ChatPromptTemplate.from_template(template)
+
+document_qa =  (
+    {"context": db.as_retriever(), "question": RunnablePassthrough()}
+    | prompt
+    | llm
+    | StrOutputParser()
 )
 
 

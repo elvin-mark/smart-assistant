@@ -1,6 +1,6 @@
 from langchain.tools import tool
 import requests
-from config import ASSISTANT_SERVER
+from engine.config import ASSISTANT_SERVER
 
 MUSIC_SERVER = f"{ASSISTANT_SERVER}/music"
 

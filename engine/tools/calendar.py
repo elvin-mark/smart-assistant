@@ -3,7 +3,7 @@ import requests
 from pydantic import BaseModel
 from typing import Optional, Union
 from datetime import datetime
-from config import ASSISTANT_SERVER
+from engine.config import ASSISTANT_SERVER
 
 CALENDAR_SERVER = f"{ASSISTANT_SERVER}/calendar"
 

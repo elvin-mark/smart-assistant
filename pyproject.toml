@@ -1,0 +1,21 @@
+[project]
+name = "smart-assistant"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "faiss-cpu>=1.13.2",
+    "flask>=3.1.2",
+    "langchain>=1.2.0",
+    "langchain-community>=0.4.1",
+    "langchain-core>=1.2.5",
+    "langchain-google-genai>=4.1.2",
+    "langchain-openai>=1.1.6",
+    "langchain-text-splitters>=1.1.0",
+    "numexpr>=2.14.1",
+    "numpy>=2.4.0",
+    "requests>=2.32.5",
+    "streamlit>=1.52.2",
+    "yfinance>=1.0",
+]
